@@ -30,6 +30,8 @@ class TestimonialController extends Controller
 
         $data = $request->all();
 
+        $data['is_active'] = true;
+
         // Lógica de Upload da Foto
         if ($request->hasFile('photo')) {
             $path = $request->file('photo')->store('testimonials', 'public');

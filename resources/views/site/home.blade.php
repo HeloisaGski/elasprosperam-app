@@ -228,7 +228,7 @@
                         </div>
                     </div>
                 @empty
-                    {{-- Caso não tenha eventos cadastrados --}}
+                    {{--  não tem eventos cadastrados --}}
                     <div class="col-span-full py-20 text-center bg-tertiary/20 rounded-[50px] border-2 border-dashed border-tertiary">
                         <p class="italic text-gray-400 font-body">
                             Novos movimentos estão sendo preparados pelas mentoras...
@@ -238,6 +238,37 @@
             </div>
         </div>
     </section>
+
+    {{-- GALERIA (CARROSSEL) --}}
+        <section class="py-16 bg-[#FDFDFC]">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-header text-[#D2AD53] sm:text-4xl tracking-wide">
+                        Nossos Momentos
+                    </h2>
+                    <div class="mt-4 flex justify-center">
+                        <div class="w-16 h-0.5 bg-[#BFB8AF]"></div>
+                    </div>
+                    <p class="mt-4 text-lg font-body text-gray-500 italic">
+                        A elegância de prosperar juntas.
+                    </p>
+                </div>
+
+                <div class="flex overflow-x-auto pb-8 hide-scroll-bar gap-6 snap-x snap-mandatory px-6 md:grid md:grid-cols-4 md:gap-8 md:overflow-visible">
+                   
+                    {{-- imagens específicas --}}
+                    @foreach(['woman.jpg', 'balcon.jpg', 'elas.jpg', 'talk.jpg'] as $img)
+                    <div class="snap-center shrink-0 w-[80vw] md:w-auto transition-transform hover:scale-[1.02] duration-500">
+                        <img class="w-full h-[400px] shadow-xl border border-[#D2AD53] object-cover rounded-lg md:rounded-none"
+                             src="{{ asset('img/' . $img) }}"
+                             alt="Momento Elas Prosperam">
+                    </div>
+                    @endforeach
+                   
+                </div>
+            </div>
+        </section>
+
 
         {{-- SEÇÃO CONTATO  --}}
         <section id="contato" class="py-32 bg-tertiary/10">
