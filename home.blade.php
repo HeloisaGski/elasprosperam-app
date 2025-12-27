@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="pt-br" class="scroll-smooth">
 <head>
     <meta charset="utf-8">
@@ -419,4 +419,4 @@
         }
     </script>
 </body>
-</html>
+</html> -->
