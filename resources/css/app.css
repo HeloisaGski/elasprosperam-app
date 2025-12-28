@@ -1,3 +1,30 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+#mobile-menu {
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    transform: translateX(100%); /* Começa fora da tela */
+    z-index: 40; /* Garante que o menu fique atrás do ícone */
+}
+
+#mobile-menu.opacity-100 {
+    opacity: 1;
+    transform: translateX(0); /* Move para dentro da tela */
+}
+
+#mobile-menu {
+    background-color: white; /* Garantir que o fundo seja branco */
+    pointer-events: none; /* Não interage com o menu quando fechado */
+    min-height: 100vh; /* Garante que o menu ocupe toda a altura da tela */
+}
+
+#mobile-menu.pointer-events-auto {
+    pointer-events: auto; /* Ativa as interações quando o menu está visível */
+}
+
+/* Ícone dentro do botão */
+button {
+    position: relative;
+    z-index: 50; /* Garante que o ícone de "X" fique sempre acima do menu */
+}
