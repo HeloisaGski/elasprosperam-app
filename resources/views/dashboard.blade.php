@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-serif text-3xl text-primary leading-tight italic">
-            Olá, {{ Auth::user()->name }}! Bem-vinda ao seu painel.
+            Seja bem vinda!
         </h2>
     </x-slot>
 
