@@ -14,7 +14,8 @@ class Event extends Model
         'title',
         'description',
         'date',
-        'location'
+        'location',
+        'link_sympla'
     ];
 
     // Garante que a data seja tratada como um objeto de data
