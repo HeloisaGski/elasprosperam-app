@@ -11,7 +11,7 @@
             {{-- Novo Evento --}}
             <div class="flex justify-end mb-8">
                 <a href="{{ route('events.create') }}" class="bg-primary text-white px-8 py-3 rounded-full text-[10px] uppercase font-bold tracking-widest shadow-lg hover:opacity-90 transition">
-                    + Novo Evento
+                    Novo Evento
                 </a>
             </div>
 
