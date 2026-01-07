@@ -171,7 +171,7 @@
                 </div>
             </div>
         </section>
-
+//
         {{-- JORNADA --}}
         <section id="jornada" class="py-20 md:py-32 bg-[#FDFDFC]">
             <div class="max-w-7xl mx-auto px-6">
