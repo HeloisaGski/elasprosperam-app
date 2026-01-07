@@ -8,40 +8,6 @@
 
     <title>Elas Prosperam — Experiência & Jornada</title>
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#D2AD53',   // Dourado
-                        secondary: '#BFB8AF', // Cinza Pastel
-                        tertiary: '#DFE1DC',  // Verde Claro
-                        warmbg: '#FDFDFC',    // Branco Quente
-                    },
-                    fontFamily: {
-                        serif: ['Times New Roman MT', 'Georgia', 'serif'],
-                        sans: ['Solomon', 'Inter', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-    
-        .font-header { 
-            font-family: 'Solomon', sans-serif; 
-            letter-spacing: -0.02em; 
-        }
-        .font-body { 
-            font-family: 'Times New Roman MT', serif; 
-        }
-        
-        .organic-shape { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
-        
-        .hide-scroll-bar::-webkit-scrollbar { display: none; }
-        .hide-scroll-bar { -ms-overflow-style: none; scrollbar-width: none; }
-    </style>
 </head>
 <body class="bg-warmbg text-gray-800 antialiased font-body overflow-x-hidden">
 
@@ -554,8 +520,16 @@
     <script>
         // Função WhatsApp 
         function sendToWhatsApp() {
-            const name = document.getElementById('whatsapp_name').value;
-            const message = document.getElementById('whatsapp_message').value;
+            const nameElement = document.getElementById('whatsapp_name');
+            const messageElement = document.getElementById('whatsapp_message');
+
+            if (!nameElement || !messageElement) {
+                console.error('Campos do WhatsApp não encontrados!');
+                return;
+            }
+
+            const name = nameElement.value;
+            const message = messageElement.value;
             const phoneNumber = "5551995214397"; 
             
             if(!name) { alert('Por favor, diga seu nome.'); return; }
@@ -566,10 +540,17 @@
             window.open(whatsappUrl, '_blank');
         }
 
-        //  Menu Mobile
         function toggleMenu() {
+            console.log('Botão clicado!'); 
+            
             const menu = document.getElementById('mobile-menu');
-          menu.classList.toggle('hidden');
+            
+            if (menu) {
+                menu.classList.toggle('hidden');
+                console.log('Classe hidden alterada. Estado atual:', menu.classList.contains('hidden'));
+            } else {
+                console.error('ERRO: O elemento id="mobile-menu" não foi encontrado no HTML.');
+            }
         }
     </script>
 </body>
