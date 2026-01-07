@@ -1,6 +1,7 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-br" class="scroll-smooth">
 <head>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" href="{{ asset('img/logoelasprosperam.svg') }}">
@@ -19,7 +20,6 @@
                         warmbg: '#FDFDFC',    // Branco Quente
                     },
                     fontFamily: {
-                        // Restaurei sua configuração original aqui
                         serif: ['Times New Roman MT', 'Georgia', 'serif'],
                         sans: ['Solomon', 'Inter', 'sans-serif'],
                     }
@@ -28,7 +28,7 @@
         }
     </script>
     <style>
-        /* Restaurei as classes originais para garantir o uso da Solomon e Times New Roman MT */
+    
         .font-header { 
             font-family: 'Solomon', sans-serif; 
             letter-spacing: -0.02em; 
@@ -39,7 +39,6 @@
         
         .organic-shape { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
         
-        /* Utilitário para esconder barra de rolagem mantendo o scroll */
         .hide-scroll-bar::-webkit-scrollbar { display: none; }
         .hide-scroll-bar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
@@ -47,55 +46,71 @@
 <body class="bg-warmbg text-gray-800 antialiased font-body overflow-x-hidden">
 
     {{-- NAVEGAÇÃO --}}
-    <header id="main-header" class="fixed w-full z-50 transition-all duration-300 bg-warmbg/90 backdrop-blur-md border-b border-tertiary/20">
+            <header id="main-header" class="fixed w-full z-40 transition-all duration-300 bg-warmbg/95 backdrop-blur-md border-b border-tertiary/20">
+
         <div class="max-w-7xl mx-auto px-6 h-20 md:h-24 flex justify-between items-center">
             
             {{-- LOGO --}}
             <a href="{{ route('home') }}" class="flex items-center group z-50 relative">
-                <img src="{{ asset('img/logoelasprosperam.svg') }}" 
-                     alt="Logo Elas Prosperam" 
-                     class="h-10 md:h-16 w-auto transition-transform duration-300 group-hover:scale-105">
+                <img src="{{ asset('img/image.png') }}" 
+                    alt="Logo Elas Prosperam" 
+                    class="h-10 md:h-16 w-auto transition-transform duration-300 group-hover:scale-105">
             </a>
 
             {{-- MENU DESKTOP --}}
-            <nav class="hidden md:flex space-x-8 lg:space-x-10 text-[11px] font-bold uppercase tracking-[0.2em] text-gray-500">
+            <nav class="hidden md:flex space-x-6 lg:space-x-8 text-[11px] font-bold uppercase tracking-[0.2em] text-gray-500">
                 <a href="#inicio" class="hover:text-primary transition">Início</a>
                 <a href="#sobre" class="hover:text-primary transition">Sobre Nós</a>
+                <a href="#programa" class="text-primary hover:text-primary/80 transition relative group">
+                    O Programa
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
+                </a>
+
                 <a href="#jornada" class="hover:text-primary transition">A Jornada</a>
                 <a href="#eventos" class="hover:text-primary transition">Eventos</a>
                 <a href="#depoimentos" class="hover:text-primary transition">Depoimentos</a>
                 <a href="#contato" class="hover:text-primary transition">Contato</a>
             </nav>
 
-            {{-- AÇÕES (LOGIN + MENU MOBILE) --}}
-            <div class="flex items-center gap-6 z-50 relative">
-                <a href="{{ route('login') }}" class="text-[10px] uppercase font-bold border-b border-primary text-primary pb-1 hover:text-gray-900 transition">Login</a>
+            {{-- AÇÕES (LOGIN + HAMBURGUER) --}}
+            <div class="flex items-center justify-end gap-6 z-50 relative w-16 md:w-20"> 
                 
-                {{-- BOTÃO HAMBÚRGUER (MOBILE) --}}
-                <button id="mobile-menu-btn" class="md:hidden text-primary focus:outline-none p-2">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                {{-- Botão Login --}}
+                <a href="{{ route('login') }}"
+                    class="text-primary hover:text-primary/80 transition"
+                    aria-label="Login">
+                        <svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                            <path d="M17 9h-1V7a4 4 0 10-8 0v2H7a2 2 0 00-2 2v8a2 2 0 002 2h10a2 2 0 002-2v-8a2 2 0 00-2-2zm-7-2a2 2 0 114 0v2h-4V7zm2 6a1.5 1.5 0 110 3 1.5 1.5 0 010-3z"/>
+                        </svg>
+                </a>
+
+                {{-- BOTÃO HAMBURGUER --}}
+                <button onclick="toggleMenu()" type="button" class="inline-flex items-center justify-center p-2 w-10 h-10 text-primary rounded-lg md:hidden hover:bg-tertiary/20 focus:outline-none focus:ring-2 focus:ring-primary">
+                    <span class="sr-only">Abrir menu</span>
+                    <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
                     </svg>
                 </button>
             </div>
         </div>
 
-        {{-- MENU MOBILE OVERLAY --}}
-        <div id="mobile-menu" class="fixed inset-0 bg-warmbg z-40 flex flex-col items-center justify-center space-y-8 opacity-0 pointer-events-none transition-opacity duration-300">
-            <nav class="flex flex-col items-center space-y-6 text-lg font-header text-gray-800">
-                <a href="#inicio" class="mobile-link hover:text-primary transition" onclick="toggleMenu()">Início</a>
-                <a href="#sobre" class="mobile-link hover:text-primary transition" onclick="toggleMenu()">Sobre Nós</a>
-                <a href="#jornada" class="mobile-link hover:text-primary transition" onclick="toggleMenu()">A Jornada</a>
-                <a href="#eventos" class="mobile-link hover:text-primary transition" onclick="toggleMenu()">Eventos</a>
-                <a href="#depoimentos" class="mobile-link hover:text-primary transition" onclick="toggleMenu()">Depoimentos</a>
-                <a href="#contato" class="mobile-link hover:text-primary transition" onclick="toggleMenu()">Contato</a>
-            </nav>
-            <div class="mt-8">
-                 <img src="{{ asset('img/logoelasprosperam.svg') }}" class="h-12 w-auto opacity-50">
-            </div>
+        {{-- MENU MOBILE DROPDOWN --}}
+        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-warmbg border-b border-tertiary/20 shadow-xl">
+            <ul class="flex flex-col p-6 space-y-4 font-header font-medium text-center text-gray-600">
+                <li><a href="#inicio" onclick="toggleMenu()" class="block py-2 hover:text-primary transition">Início</a></li>
+                <li><a href="#sobre" onclick="toggleMenu()" class="block py-2 hover:text-primary transition">Sobre Nós</a></li>
+                
+                <li><a href="#programa" onclick="toggleMenu()" class="block py-2 text-primary font-bold hover:text-primary/80 transition bg-primary/5 rounded-lg">O Programa</a></li>
+                
+                <li><a href="#jornada" onclick="toggleMenu()" class="block py-2 hover:text-primary transition">A Jornada</a></li>
+                <li><a href="#eventos" onclick="toggleMenu()" class="block py-2 hover:text-primary transition">Eventos</a></li>
+                <li><a href="#depoimentos" onclick="toggleMenu()" class="block py-2 hover:text-primary transition">Depoimentos</a></li>
+                <li>
+                    <a href="#contato" onclick="toggleMenu()" class="block py-2 mt-2 px-6 py-2 bg-primary text-white rounded-full mx-auto w-max hover:bg-opacity-90 transition">Entre em Contato</a>
+                </li>
+            </ul>
         </div>
     </header>
-
     <main>
         {{-- HERO SECTION --}}
         <section id="inicio" class="relative min-h-screen flex items-center pt-24 pb-12 bg-tertiary/30 overflow-hidden">
@@ -216,56 +231,59 @@
         </section>
 
         {{-- EVENTOS --}}
-        <section id="eventos" class="py-20 md:py-32 bg-white">
-            <div class="max-w-7xl mx-auto px-6">
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
-                    <h2 class="text-4xl md:text-5xl font-header text-gray-900 leading-tight">
-                        Próximos <br><span class="text-primary italic">Encontros</span>
-                    </h2>
-                    <p class="text-gray-500 max-w-xs text-sm italic font-body">
-                        Palestras, workshops e imersões presenciais ou online para o seu crescimento.
-                    </p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
-                    @forelse($events as $event)
-                        <div class="flex flex-col sm:flex-row gap-6 sm:gap-8 items-start sm:items-center p-6 sm:p-8 bg-tertiary/10 border border-tertiary rounded-[30px] md:rounded-[40px] hover:border-primary transition duration-500 group">
-                            <div class="text-left sm:text-center border-b sm:border-b-0 sm:border-r border-tertiary pb-4 sm:pb-0 pr-0 sm:pr-8 shrink-0 w-full sm:w-auto">
-                                <span class="block text-4xl font-header text-primary leading-none">
-                                    {{ $event->date->format('d') }}
-                                </span>
-                                <span class="block text-[10px] uppercase font-bold text-gray-400 mt-2 tracking-widest">
-                                    {{ $event->date->translatedFormat('M') }}
-                                </span>
-                            </div>
-
-                            <div>
-                                <span class="text-[9px] uppercase font-bold tracking-[0.2em] text-secondary mb-2 block">
-                                    {{ $event->location }}
-                                </span>
-                                <h3 class="text-xl md:text-2xl font-header text-gray-900 mb-3 group-hover:text-primary transition">
-                                    {{ $event->title }}
-                                </h3>
-                                <p class="text-gray-500 text-sm font-body mb-4 line-clamp-2">
-                                    {{ $event->description }}
-                                </p>
-                                <a href="#contato" class="text-[10px] uppercase font-bold text-primary tracking-widest border-b border-primary/30 pb-1 hover:border-primary transition">
-                                    Saber Mais
-                                </a>
-                            </div>
-                        </div>
-                    @empty
-                        <div class="col-span-full py-20 text-center bg-tertiary/20 rounded-[50px] border-2 border-dashed border-tertiary">
-                            <p class="italic text-gray-400 font-body">
-                                Novos movimentos estão sendo preparados pelas mentoras...
-                            </p>
-                        </div>
-                    @endforelse
-                </div>
+            <section id="eventos" class="py-20 md:py-32 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            
+            <div class="mb-16">
+                <span class="text-primary font-bold uppercase tracking-[0.3em] text-xs mb-2 block">Agenda</span>
+                <h2 class="text-4xl md:text-5xl font-header text-gray-900">
+                    Próximos <span class="text-primary italic">Eventos</span>
+                </h2>
             </div>
-        </section>
 
-{{-- GALERIA (CARROSSEL) --}}
+            <div class="grid grid-cols-1 gap-8">
+                @forelse($events as $event)
+                    <div class="group relative flex flex-col md:flex-row gap-6 md:gap-10 items-start md:items-center p-8 rounded-[30px] bg-tertiary/5 border border-tertiary/20 hover:border-primary/50 transition duration-500 hover:shadow-lg">
+                        
+                        {{-- DATA --}}
+                        <div class="flex md:flex-col items-center gap-3 md:gap-0 border-b md:border-b-0 md:border-r border-gray-200 pr-0 md:pr-10 shrink-0 w-full md:w-auto pb-4 md:pb-0">
+                            <span class="block text-4xl md:text-5xl font-header text-primary leading-none">
+                                {{ $event->date->format('d') }}
+                            </span>
+                            <span class="block text-sm uppercase font-bold text-gray-400 tracking-widest">
+                                {{ $event->date->translatedFormat('M') }}
+                            </span>
+                        </div>
+
+                        {{-- INFO DO EVENTO --}}
+                        <div class="grow w-full">
+                            <h3 class="text-2xl font-header text-gray-900 mb-2 group-hover:text-primary transition">
+                                {{ $event->title }}
+                            </h3>
+                            <p class="text-gray-500 text-sm font-body mb-6 max-w-2xl leading-relaxed">
+                                {{ $event->description }}
+                            </p>
+
+                            {{-- BOTÃO SYMPLA  --}}
+                            @if(!empty($event->link_sympla))
+                                <div class="mt-4 md:mt-0">
+                                    <a href="{{ $event->link_sympla }}" target="_blank" class="inline-flex items-center justify-center px-8 py-3 bg-primary text-white rounded-full text-xs font-bold uppercase tracking-widest hover:bg-primary/90 hover:-translate-y-1 transition-all shadow-lg shadow-primary/20 w-full md:w-auto">
+                                        Garanta seu Ingresso Aqui
+                                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"></path>
+                                        </svg>
+                                    </a>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                @empty
+                    <p class="text-gray-500 italic">Nenhum evento agendado no momento.</p>
+                @endforelse
+            </div>
+        </div>
+    </section>
+        {{-- GALERIA (CARROSSEL) --}}
         <section class="py-16 bg-[#FDFDFC]"> 
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-12">
@@ -292,6 +310,158 @@
                     @endforeach
                     
                 </div>
+            </div>
+        </section>
+
+    {{-- SEÇÃO: O PROGRAMA DE MENTORIA (90 DIAS) --}}
+        <section id="programa" class="py-24 md:py-32 bg-gradient-to-b from-white via-warmbg/50 to-white relative overflow-hidden">
+            
+            <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
+
+            <div class="max-w-7xl mx-auto px-6 relative z-10">
+                
+                <div class="text-center max-w-4xl mx-auto mb-20">
+                    <span class="inline-block py-1 px-3 rounded-full bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-[0.2em] mb-4">
+                        Mentoria Premium • 90 Dias
+                    </span>
+                    <h2 class="text-4xl md:text-6xl font-header text-gray-900 leading-tight mb-6">
+                        Programa <span class="text-primary italic">Elas Prosperam</span>
+                    </h2>
+                    <p class="text-lg text-gray-600 font-body leading-relaxed mb-8">
+                        A travessia que transforma a mulher empresária exausta na mulher que prospera com <strong class="text-primary">propósito, presença e estratégia.</strong>
+                    </p>
+                    <p class="text-sm font-bold uppercase tracking-widest text-gray-400">
+                        Energia • Emoção • Estratégia
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mb-24 items-stretch">
+                    
+                    <div class="bg-gray-50 p-10 rounded-[30px] border border-gray-100 relative">
+                        <div class="absolute -top-5 left-8 bg-gray-200 text-gray-600 font-bold px-4 py-1 text-xs uppercase tracking-widest rounded-full">
+                            Ponto A
+                        </div>
+                        <h3 class="text-2xl font-header text-gray-400 mb-6">A Empresária Fragmentada</h3>
+                        <ul class="space-y-4 font-body text-gray-500">
+                            <li class="flex items-start gap-3">
+                                <span class="text-red-300 mt-1">✕</span>
+                                <span>Sente-se pesada, drenada e desconectada de si.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-red-300 mt-1">✕</span>
+                                <span>Negócio lucra, mas você não prospera por dentro.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-red-300 mt-1">✕</span>
+                                <span>Culpa por não dar conta de ser mãe, mulher e líder.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-red-300 mt-1">✕</span>
+                                <span>Oscila entre acelerar demais e travar por exaustão.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-white p-10 rounded-[30px] border border-primary/30 shadow-2xl shadow-primary/10 relative transform md:-translate-y-4">
+                        <div class="absolute -top-5 left-8 bg-primary text-white font-bold px-4 py-1 text-xs uppercase tracking-widest rounded-full">
+                            Ponto B
+                        </div>
+                        <h3 class="text-2xl font-header text-primary mb-6">A Mulher Próspera</h3>
+                        <ul class="space-y-4 font-body text-gray-700 font-medium">
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-primary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                <span>Energia limpa, alinhada e com presença real.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-primary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                <span>Clareza estratégica e rota de crescimento definida.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-primary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                <span>Limites claros e segurança emocional inabalável.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-primary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                <span>Prosperidade que começa dentro e se manifesta fora.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mb-24">
+                    <div class="text-center mb-16">
+                        <h3 class="text-3xl md:text-4xl font-header text-gray-900 mb-4">
+                            Guiada por <span class="text-primary italic">3 Mentoras</span>
+                        </h3>
+                        <p class="text-gray-500 max-w-2xl mx-auto">
+                            A única metodologia que integra as três dimensões essenciais para sustentar a prosperidade real.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        {{-- Priscila --}}
+                        <div class="text-center group">
+                            <div class="w-20 h-20 mx-auto bg-tertiary/10 rounded-full flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition duration-300">
+                                {{-- Ícone Emoção --}}
+                                <svg class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
+                            </div>
+                            <h4 class="text-lg font-header font-bold text-gray-900">Priscila Golarte</h4>
+                            <span class="text-[10px] uppercase tracking-[0.2em] font-bold text-primary block mb-3">Emoção</span>
+                            <p class="text-sm text-gray-500 leading-relaxed px-4">
+                                Estrutura emocional e liderança do sentir. Cura traumas, reconfigura padrões e ativa sua identidade e força interna.
+                            </p>
+                        </div>
+
+                        {{-- Vanessa Mello --}}
+                        <div class="text-center group">
+                            <div class="w-20 h-20 mx-auto bg-tertiary/10 rounded-full flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition duration-300">
+                                {{-- Ícone Estratégia --}}
+                                <svg class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+                            </div>
+                            <h4 class="text-lg font-header font-bold text-gray-900">Vanessa Mello</h4>
+                            <span class="text-[10px] uppercase tracking-[0.2em] font-bold text-primary block mb-3">Estratégia</span>
+                            <p class="text-sm text-gray-500 leading-relaxed px-4">
+                                Visão, método e organização. Traz a clareza prática, a rota de crescimento e a estrutura para o negócio prosperar.
+                            </p>
+                        </div>
+
+                        {{-- Vanessa Santos --}}
+                        <div class="text-center group">
+                            <div class="w-20 h-20 mx-auto bg-tertiary/10 rounded-full flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition duration-300">
+                                <svg class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                            </div>
+                            <h4 class="text-lg font-header font-bold text-gray-900">Vanessa Santos</h4>
+                            <span class="text-[10px] uppercase tracking-[0.2em] font-bold text-primary block mb-3">Energia</span>
+                            <p class="text-sm text-gray-500 leading-relaxed px-4">
+                                Alinhamento do campo e eixo feminino. Libera bloqueios, devolve a presença e conecta você à sua potência real.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gray-900 rounded-[40px] p-10 md:p-16 text-center relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-primary/20 rounded-full blur-3xl pointer-events-none"></div>
+
+                    <div class="relative z-10 max-w-3xl mx-auto">
+                        <h3 class="text-3xl md:text-5xl font-header text-white mb-6 leading-tight">
+                            Você sente que chegou a <br><span class="text-primary italic">sua hora?</span>
+                        </h3>
+                        <p class="text-gray-400 text-lg mb-10 font-body">
+                            Um novo ciclo começa em breve. Entre para a lista de espera e seja avisada quando abrirmos as aplicações para a próxima turma.
+                        </p>
+                        
+                        <a href="https://wa.me/5551995214397?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20o%20Programa%20de%20Mentoria%20Elas%20Prosperam." 
+                        target="_blank"
+                        class="inline-flex items-center justify-center px-10 py-4 bg-primary text-white rounded-full font-bold uppercase tracking-widest hover:bg-white hover:text-primary transition-all duration-300 shadow-[0_0_30px_rgba(196,164,132,0.3)] hover:shadow-[0_0_50px_rgba(255,255,255,0.4)]">
+                            Aplicar para o Programa
+                        </a>
+                        
+                        <p class="mt-6 text-xs text-gray-500 uppercase tracking-widest">
+                            Vagas Limitadas • Acompanhamento Exclusivo
+                        </p>
+                    </div>
+                </div>
+
             </div>
         </section>
 
@@ -362,7 +532,6 @@
                 </div>
             </div>
         </section>
-
     </main>
 
     <footer class="py-16 bg-white border-t border-tertiary">
@@ -383,7 +552,7 @@
 
     {{-- SCRIPTS --}}
     <script>
-        // Função WhatsApp
+        // Função WhatsApp 
         function sendToWhatsApp() {
             const name = document.getElementById('whatsapp_name').value;
             const message = document.getElementById('whatsapp_message').value;
@@ -397,26 +566,11 @@
             window.open(whatsappUrl, '_blank');
         }
 
-        // Função Menu Mobile
-        const btn = document.getElementById('mobile-menu-btn');
-        const menu = document.getElementById('mobile-menu');
-
-        btn.addEventListener('click', toggleMenu);
-
+        //  Menu Mobile
         function toggleMenu() {
-            menu.classList.toggle('opacity-0');
-            menu.classList.toggle('pointer-events-none');
-            
-            // Troca ícone se quiser (opcional)
-            const icon = btn.querySelector('svg path');
-            if (menu.classList.contains('opacity-0')) {
-                 // Ícone Hambúrguer
-                 icon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
-            } else {
-                 // Ícone X
-                 icon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
-            }
+            const menu = document.getElementById('mobile-menu');
+          menu.classList.toggle('hidden');
         }
     </script>
 </body>
-</html> -->
+</html>
