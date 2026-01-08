@@ -97,7 +97,7 @@
                 {{-- Imagem Hero --}}
                 <div class="relative flex justify-center order-1 lg:order-2">
                     <div class="organic-shape bg-secondary w-full max-w-[300px] md:max-w-md lg:max-w-lg aspect-square overflow-hidden shadow-2xl rotate-3 hover:rotate-0 transition duration-700">
-                        <img src="{{ asset('img/proprietarias2.jpg') }}" alt="Mentoras Elas Prosperam" class="w-full h-full object-cover">
+                        <img src="{{ asset('img/proprietarias2.webp') }}" alt="Mentoras Elas Prosperam" class="w-full h-full object-cover">
                     </div>
                 </div>
             </div>
@@ -113,9 +113,9 @@
                 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
                     @foreach([
-                        ['nome' => 'Vanessa Santos', 'foco' => 'Energia', 'foto' => 'VanessaSantos.jpg'],
-                        ['nome' => 'Priscila Golarte', 'foco' => 'Emocional', 'foto' => 'PriscilaGolarte.jpg'],
-                        ['nome' => 'Vanessa Mello', 'foco' => 'Financeiro', 'foto' => 'VanessaMello.jpg']
+                        ['nome' => 'Vanessa Santos', 'foco' => 'Energia', 'foto' => 'VanessaSantos.webp'],
+                        ['nome' => 'Priscila Golarte', 'foco' => 'Emocional', 'foto' => 'PriscilaGolarte.webp'],
+                        ['nome' => 'Vanessa Mello', 'foco' => 'Financeiro', 'foto' => 'VanessaMello.webp']
                     ] as $mentora)
                     <div class="group text-center">
                         <div class="mx-auto md:mx-0 mb-8 overflow-hidden rounded-[60px] w-64 md:w-full aspect-[4/5] bg-tertiary transition duration-500 shadow-lg relative">
@@ -177,7 +177,7 @@
 
                     <div class="relative lg:sticky lg:top-32 mt-12 lg:mt-0">
                         <div class="organic-shape bg-tertiary w-full aspect-[4/5] overflow-hidden shadow-2xl relative z-10">
-                            <img src="{{ asset('img/proprietarias.jpg') }}" class="w-full h-full object-cover">
+                            <img src="{{ asset('img/proprietarias.webp') }}" class="w-full h-full object-cover">
                         </div>
                         
                         {{-- Card Flutuante --}}
@@ -350,7 +350,7 @@
                 <div class="flex overflow-x-auto pb-8 hide-scroll-bar gap-6 snap-x snap-mandatory px-6 md:grid md:grid-cols-4 md:gap-8 md:overflow-visible">
                     
                     {{-- Loop com as imagens específicas --}}
-                    @foreach(['woman.jpg', 'balcon.jpg', 'elas.jpg', 'talk.jpg'] as $img)
+                    @foreach(['woman.webp', 'balcon.webp', 'elas.webp', 'talk.webp'] as $img)
                     <div class="snap-center shrink-0 w-[80vw] md:w-auto transition-transform hover:scale-[1.02] duration-500">
                         <img class="w-full h-[400px] shadow-xl border border-[#D2AD53] object-cover rounded-lg md:rounded-none" 
                              src="{{ asset('img/' . $img) }}" 
