@@ -49,6 +49,24 @@
                 <h1 class="text-3xl font-bold mb-4">{{ $event->title }}</h1>
                 <p class="text-sm text-gray-500 mb-4">Data: {{ \Carbon\Carbon::parse($event->date)->format('d/m/Y') }} | Local: {{ $event->location }}</p>
                 <p class="text-gray-700 mb-8">{{ $event->description }}</p>
+                <p class="text-gray-700 mb-8">{{ $event->description }}</p>
+            {{-- BOTÃO DE COMPRA --}}
+            @if(!empty($event->link_sympla))
+                <div class="mb-10 text-center">
+                    <a href="{{ $event->link_sympla }}" target="_blank" 
+                    class="inline-flex items-center gap-3 bg-primary text-white px-8 py-4 rounded-full text-sm font-bold uppercase tracking-widest shadow-lg hover:bg-opacity-90 hover:-translate-y-1 transition-all duration-300 transform">
+                        {{-- icone de Ingresso --}}
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 010 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 010-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375z" />
+                        </svg>
+                        Garantir meu Ingresso
+                    </a>
+                </div>
+            @endif
+
+            <div class="flex justify-between">
+
+            </div>
                 <div class="flex justify-between">
                     <a href="{{ route('events.index') }}" class="bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400 transition duration-300">Voltar aos Eventos</a>
                     @auth

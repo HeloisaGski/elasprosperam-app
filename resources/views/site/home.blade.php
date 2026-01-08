@@ -175,7 +175,6 @@
                         @endforeach
                     </div>
 
-                    {{-- Imagem Sticky --}}
                     <div class="relative lg:sticky lg:top-32 mt-12 lg:mt-0">
                         <div class="organic-shape bg-tertiary w-full aspect-[4/5] overflow-hidden shadow-2xl relative z-10">
                             <img src="{{ asset('img/proprietarias.jpg') }}" class="w-full h-full object-cover">
@@ -197,58 +196,142 @@
         </section>
 
         {{-- EVENTOS --}}
-            <section id="eventos" class="py-20 md:py-32 bg-white">
-        <div class="max-w-7xl mx-auto px-6">
-            
-            <div class="mb-16">
-                <span class="text-primary font-bold uppercase tracking-[0.3em] text-xs mb-2 block">Agenda</span>
-                <h2 class="text-4xl md:text-5xl font-header text-gray-900">
-                    Próximos <span class="text-primary italic">Eventos</span>
-                </h2>
-            </div>
+        <section id="eventos" class="py-20 md:py-32 bg-white">
+            <div class="max-w-7xl mx-auto px-6">
+                
+                @php
+                   
+                    $destaque = $events->firstWhere('is_featured', true);
 
-            <div class="grid grid-cols-1 gap-8">
-                @forelse($events as $event)
-                    <div class="group relative flex flex-col md:flex-row gap-6 md:gap-10 items-start md:items-center p-8 rounded-[30px] bg-tertiary/5 border border-tertiary/20 hover:border-primary/50 transition duration-500 hover:shadow-lg">
-                        
-                        {{-- DATA --}}
-                        <div class="flex md:flex-col items-center gap-3 md:gap-0 border-b md:border-b-0 md:border-r border-gray-200 pr-0 md:pr-10 shrink-0 w-full md:w-auto pb-4 md:pb-0">
-                            <span class="block text-4xl md:text-5xl font-header text-primary leading-none">
-                                {{ $event->date->format('d') }}
-                            </span>
-                            <span class="block text-sm uppercase font-bold text-gray-400 tracking-widest">
-                                {{ $event->date->translatedFormat('M') }}
-                            </span>
-                        </div>
+                   
+                    if (!$destaque && $events->count() > 0) {
+                        $destaque = $events->first();
+                    }
 
-                        {{-- INFO DO EVENTO --}}
-                        <div class="grow w-full">
-                            <h3 class="text-2xl font-header text-gray-900 mb-2 group-hover:text-primary transition">
-                                {{ $event->title }}
-                            </h3>
-                            <p class="text-gray-500 text-sm font-body mb-6 max-w-2xl leading-relaxed">
-                                {{ $event->description }}
-                            </p>
+                   
+                    $outrosEventos = $destaque ? $events->reject(fn($e) => $e->id === $destaque->id) : $events;
+                @endphp
 
-                            {{-- BOTÃO SYMPLA  --}}
-                            @if(!empty($event->link_sympla))
-                                <div class="mt-4 md:mt-0">
-                                    <a href="{{ $event->link_sympla }}" target="_blank" class="inline-flex items-center justify-center px-8 py-3 bg-primary text-white rounded-full text-xs font-bold uppercase tracking-widest hover:bg-primary/90 hover:-translate-y-1 transition-all shadow-lg shadow-primary/20 w-full md:w-auto">
-                                        Garanta seu Ingresso Aqui
-                                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"></path>
-                                        </svg>
-                                    </a>
+                <div class="mb-12">
+                    <span class="text-primary font-bold uppercase tracking-[0.3em] text-xs mb-2 block">Agenda</span>
+                    <h2 class="text-4xl md:text-5xl font-header text-gray-900">
+                        Próximos <span class="text-primary italic">Eventos</span>
+                    </h2>
+                </div>
+
+                
+                @if($destaque)
+                    <div class="mb-20 animate-fade-in-up">
+                        <div class="bg-white rounded-[40px] shadow-2xl shadow-primary/10 border border-primary relative overflow-hidden group">
+                            
+                            <div class="absolute top-0 left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] font-bold px-6 py-2 rounded-b-xl uppercase tracking-widest z-10 shadow-md">
+                                ★ Próximo Encontro
+                            </div>
+
+                            <div class="flex flex-col md:flex-row">
+                                
+                                <div class="bg-[#FDFBF7] p-10 md:w-1/3 flex flex-col justify-center items-center border-b md:border-b-0 md:border-r border-primary/10 text-center relative overflow-hidden">
+                                    <div class="absolute top-0 left-0 w-full h-2 bg-primary"></div>
+
+                                    <span class="text-7xl md:text-9xl font-serif text-primary mb-2 leading-none drop-shadow-sm">
+                                        {{ $destaque->date->format('d') }}
+                                    </span>
+                                    <span class="text-xl uppercase tracking-[0.4em] font-bold text-gray-400">
+                                        {{ $destaque->date->translatedFormat('F') }}
+                                    </span>
                                 </div>
+
+                                <div class="p-10 md:w-2/3 flex flex-col justify-center bg-white relative">
+                                    
+                                    {{-- Título --}}
+                                    <h3 class="text-3xl md:text-5xl font-header text-gray-900 mb-6 leading-tight">
+                                        {{ $destaque->title }}
+                                    </h3>
+                                    
+                                    {{-- Descrição --}}
+                                    <p class="text-gray-500 text-lg mb-8 leading-relaxed font-body max-w-2xl border-l-4 border-primary/20 pl-6">
+                                        {{ $destaque->description }}
+                                    </p>
+                                    
+                                    <div class="flex flex-col sm:flex-row items-start sm:items-center gap-6 mt-auto">
+                                        {{-- Botão Dourado --}}
+                                        @if($destaque->link_sympla)
+                                            <a href="{{ $destaque->link_sympla }}" target="_blank" 
+                                            class="group bg-primary text-white px-10 py-4 rounded-full font-bold uppercase tracking-widest hover:bg-[#c29d4b] hover:-translate-y-1 transition-all duration-300 shadow-xl shadow-primary/20 flex items-center gap-3 text-xs">
+                                                Garantir Lugar
+                                                <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                                            </a>
+                                        @endif
+                                        
+                                        {{-- Localização --}}
+                                        <div class="flex items-center gap-2 text-gray-400 text-sm font-bold uppercase tracking-wider">
+                                            <span class="p-2 bg-gray-50 rounded-full text-primary">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                            </span>
+                                            {{ $destaque->location }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if($outrosEventos->count() > 0)
+                        <div class="flex items-center justify-between mb-12">
+                            <h3 class="font-serif text-2xl text-gray-300 italic">Mais Datas</h3>
+                            <div class="h-px bg-gray-100 flex-grow ml-8"></div>
+                        </div>
+                    @endif
+                @endif
+
+
+                <div class="grid grid-cols-1 gap-5">
+            @forelse($outrosEventos as $event)
+                <div class="group flex flex-col md:flex-row gap-6 items-start md:items-center p-8 rounded-[30px] bg-tertiary/10 border border-transparent hover:border-primary/30 hover:bg-white transition duration-300">
+                    
+                    <div class="flex items-baseline gap-2 md:w-32 md:flex-col md:gap-0 md:text-center shrink-0">
+                        <span class="text-3xl font-serif text-gray-400 group-hover:text-primary transition">
+                            {{ $event->date->format('d') }}
+                        </span>
+                        <span class="text-[10px] font-bold uppercase text-gray-400 tracking-widest">
+                            {{ $event->date->translatedFormat('M') }}
+                        </span>
+                    </div>
+
+                    <div class="hidden md:block w-px h-16 bg-gray-200 group-hover:bg-primary/30 transition"></div>
+
+                    <div class="grow w-full">
+                        <h4 class="text-xl font-header text-gray-800 group-hover:text-primary transition mb-2">
+                            {{ $event->title }}
+                        </h4>
+                        
+                        <p class="text-gray-500 text-sm font-body mb-4 line-clamp-2 max-w-3xl">
+                            {{ $event->description }}
+                        </p>
+                        
+                        <div class="flex items-center justify-between border-t border-gray-200/50 pt-3 mt-2">
+                            <span class="text-xs text-gray-400 font-bold uppercase tracking-wider flex items-center gap-2">
+                                {{ $event->location }}
+                            </span>
+
+                            @if($event->link_sympla)
+                                <a href="{{ $event->link_sympla }}" target="_blank" class="text-[10px] font-bold text-gray-400 group-hover:text-primary transition uppercase tracking-widest flex items-center gap-1 hover:underline decoration-primary underline-offset-4">
+                                    Ver Detalhes 
+                                    <span class="text-lg leading-none">→</span>
+                                </a>
                             @endif
                         </div>
                     </div>
-                @empty
-                    <p class="text-gray-500 italic">Nenhum evento agendado no momento.</p>
-                @endforelse
-            </div>
+                </div>
+            @empty
+                @if(!$destaque)
+                    <div class="text-center py-12 bg-gray-50 rounded-[30px] border border-dashed border-gray-300">
+                        <p class="text-gray-400 italic">Nenhum evento agendado no momento.</p>
+                    </div>
+                @endif
+            @endforelse
         </div>
-    </section>
+        </section>
         {{-- GALERIA (CARROSSEL) --}}
         <section class="py-16 bg-[#FDFDFC]"> 
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -518,38 +601,42 @@
 
     {{-- SCRIPTS --}}
     <script>
-        // Função WhatsApp 
+        // WhatsApp 
         function sendToWhatsApp() {
-            const nameElement = document.getElementById('whatsapp_name');
-            const messageElement = document.getElementById('whatsapp_message');
-
-            if (!nameElement || !messageElement) {
-                console.error('Campos do WhatsApp não encontrados!');
+           
+            const nameInput = document.getElementById('whatsapp_name');
+            const messageInput = document.getElementById('whatsapp_message');
+            if (!nameInput || !messageInput) {
+                console.error('Erro: Campos do formulário não encontrados.');
                 return;
             }
 
-            const name = nameElement.value;
-            const message = messageElement.value;
+            const name = nameInput.value;
+            const message = messageInput.value;
             const phoneNumber = "5551995214397"; 
-            
-            if(!name) { alert('Por favor, diga seu nome.'); return; }
+
+       
+            if (!name) { 
+                alert('Por favor, diga seu nome para iniciarmos o atendimento.'); 
+                return; 
+            }
 
             const text = `Olá! Meu nome é *${name}*.\n\n${message}`;
             const encodedText = encodeURIComponent(text);
             const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedText}`;
+            
             window.open(whatsappUrl, '_blank');
         }
 
+        //  Menu Mobile ---
         function toggleMenu() {
-            console.log('Botão clicado!'); 
-            
             const menu = document.getElementById('mobile-menu');
             
             if (menu) {
+                
                 menu.classList.toggle('hidden');
-                console.log('Classe hidden alterada. Estado atual:', menu.classList.contains('hidden'));
             } else {
-                console.error('ERRO: O elemento id="mobile-menu" não foi encontrado no HTML.');
+                console.error('Erro: Elemento mobile-menu não encontrado.');
             }
         }
     </script>

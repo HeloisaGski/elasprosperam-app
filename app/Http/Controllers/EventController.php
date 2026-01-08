@@ -39,11 +39,16 @@ class EventController extends Controller
             'description' => 'required|string',
             'date' => 'required|date',
             'location' => 'required|string|max:255',
+            'link_sympla' => 'nullable|url',
+            'is_featured' => 'boolean',
         ]);
 
-        Event::create($request->all());
+        $data = $request->all();
+        $data['is_featured'] = $request->has('is_featured');
 
-        return redirect()->route('events.index')->with('success', 'Event created successfully.');
+        Event::create($data); 
+
+        return redirect()->route('events.index')->with('success', 'Evento criado com sucesso.');
     }
 
     /**
@@ -72,13 +77,16 @@ class EventController extends Controller
             'description' => 'required|string',
             'date' => 'required|date',
             'location' => 'required|string|max:255',
+            'link_sympla' => 'nullable|url',
         ]);
 
-        $event->update($request->all());
+        $data = $request->all();
+        $data['is_featured'] = $request->has('is_featured');
 
-        return redirect()->route('events.index')->with('success', 'Event updated successfully.');
+        $event->update($data);
+
+        return redirect()->route('events.index')->with('success', 'Evento atualizado.');
     }
-
     /**
      * Remove the specified resource from storage.
      */

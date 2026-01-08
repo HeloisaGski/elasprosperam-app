@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Event;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,23 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        // 1. Busca o destaque
+        $featuredEvent = Event::where('is_featured', true)
+            ->whereDate('date', '>=', now())
+            ->orderBy('date', 'asc')
+            ->first();
+
+        // 2. Busca o resto
+        $query = Event::query()
+            ->whereDate('date', '>=', now())
+            ->orderBy('date', 'asc');
+        
+        if ($featuredEvent) {
+            $query->where('id', '!=', $featuredEvent->id);
+        }
+        
+        $events = $query->get();
+
+        return view('home', compact('featuredEvent', 'events'));
     }
 }
