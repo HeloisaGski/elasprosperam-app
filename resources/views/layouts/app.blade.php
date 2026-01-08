@@ -7,27 +7,6 @@
         <link rel="icon" type="image/png" href="{{ asset('img/logoelasprosperam.svg') }}">
 
         <title>Painel ADMIN — Elas Prosperam</title>
-
-        {{-- Tailwind CDN & Config --}}
-        <script src="https://cdn.tailwindcss.com"></script>
-        <script>
-            tailwind.config = {
-                theme: {
-                    extend: {
-                        colors: {
-                            primary: '#D2AD53',   // Ouro
-                            secondary: '#BFB8AF', // Laranja Acinzentado
-                            tertiary: '#DFE1DC',  // Verde Claro
-                        },
-                        fontFamily: {
-                            sans: ['Solomon', 'sans-serif'],
-                            serif: ['Times New Roman MT', 'serif'],
-                        }
-                    }
-                }
-            }
-        </script>
-
         <style>
             /* fundo sempre o verde claro da marca */
             body { background-color: #DFE1DC; }
