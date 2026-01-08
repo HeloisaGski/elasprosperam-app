@@ -9,10 +9,10 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
         Schema::table('events', function (Blueprint $table) {
-            $table->string('link_sympla')->nullable()->after('description');
+            $table->boolean('is_featured')->default(false)->after('link_sympla');
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('events', function (Blueprint $table) {
-            $table->dropColumn('link_sympla');
+            $table->dropColumn('is_featured');
         });
     }
 };

@@ -38,6 +38,17 @@
                         </div>
                     </div>
 
+                    <div>
+                        {{-- NOVO CAMPO: Link Sympla --}}
+                    <div>
+                        <label class="block text-[10px] uppercase font-bold tracking-[0.2em] text-secondary mb-2">
+                            Link do Ingresso (Sympla)
+                        </label>
+                        <input type="url" name="link_sympla" 
+                            class="w-full border-tertiary rounded-2xl focus:ring-primary focus:border-primary p-4 bg-tertiary/10 border-0"
+                            placeholder="https://www.sympla.com.br/evento/..."
+                            value="{{ old('link_sympla', $event->link_sympla) }}">
+                    </div>       
                     {{-- Descrição --}}
                     <div>
                         <label class="block text-[10px] uppercase font-bold tracking-[0.2em] text-secondary mb-2">Breve Descrição</label>
