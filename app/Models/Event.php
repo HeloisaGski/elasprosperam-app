@@ -14,10 +14,12 @@ class Event extends Model
         'description',
         'date',
         'location',
-        'link_sympla'
+        'link_sympla',
+        'is_featured'
     ];
 
     protected $casts = [
         'date' => 'datetime',
+        'is_featured' => 'boolean'
     ];
 }
