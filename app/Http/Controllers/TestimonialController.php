@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Testimonial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image; 
 
 class TestimonialController extends Controller
 {
@@ -25,16 +26,27 @@ class TestimonialController extends Controller
             'client_name' => 'required|string|max:255',
             'content'     => 'required|string',
             'rating'      => 'required|integer|min:1|max:5',
-            'photo'       => 'nullable|image|mimes:jpg,jpeg,png|max:2048', // Validação da foto
+            'photo'       => 'nullable|image|mimes:jpg,jpeg,png|max:5120',
         ]);
 
         $data = $request->all();
-
         $data['is_active'] = true;
 
-        // Lógica de Upload da Foto
         if ($request->hasFile('photo')) {
-            $path = $request->file('photo')->store('testimonials', 'public');
+            $image = $request->file('photo');
+            
+            $filename = md5(time() . uniqid()) . '.webp';
+            $path = 'testimonials/' . $filename;
+
+            $img = Image::make($image->getRealPath())
+                ->resize(300, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                })
+                ->encode('webp', 80);
+
+            Storage::disk('public')->put($path, (string) $img);
+            
             $data['photo_path'] = $path;
         }
 
@@ -54,18 +66,31 @@ class TestimonialController extends Controller
             'client_name' => 'required|string|max:255',
             'content'     => 'required|string',
             'rating'      => 'required|integer|min:1|max:5',
-            'photo'       => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'photo'       => 'nullable|image|mimes:jpg,jpeg,png|max:5120',
         ]);
 
         $data = $request->all();
 
         if ($request->hasFile('photo')) {
-            // Apaga a foto antiga se ela existir
+            // apaga a foto antiga
             if ($testimonial->photo_path) {
-                Storage::disk('public')->delete($testimonial->photo_path);
+                if(Storage::disk('public')->exists($testimonial->photo_path)) {
+                    Storage::disk('public')->delete($testimonial->photo_path);
+                }
             }
             
-            $path = $request->file('photo')->store('testimonials', 'public');
+            $image = $request->file('photo');
+            $filename = md5(time() . uniqid()) . '.webp';
+            $path = 'testimonials/' . $filename;
+
+            $img = Image::make($image->getRealPath())
+                ->resize(300, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                })
+                ->encode('webp', 80);
+
+            Storage::disk('public')->put($path, (string) $img);
             $data['photo_path'] = $path;
         }
 
@@ -77,7 +102,9 @@ class TestimonialController extends Controller
     public function destroy(Testimonial $testimonial)
     {
         if ($testimonial->photo_path) {
-            Storage::disk('public')->delete($testimonial->photo_path);
+            if(Storage::disk('public')->exists($testimonial->photo_path)) {
+                Storage::disk('public')->delete($testimonial->photo_path);
+            }
         }
         
         $testimonial->delete();

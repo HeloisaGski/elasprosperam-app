@@ -32,7 +32,7 @@ class TestimonialSeeder extends Seeder
                 'client_name' => $data['client_name'],
                 'content'     => $data['content'],
                 'rating'      => $data['rating'],
-                'photo_path'  => 'testimonials/woman.webp',
+                'photo_path'  => 'testimonials/b018a2e6f714bd68476555704b826ac1.webp',
                 'is_active'   => true,
             ]);
         }
