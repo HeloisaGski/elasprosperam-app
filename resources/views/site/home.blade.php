@@ -224,12 +224,12 @@
                     <div class="mb-20 animate-fade-in-up">
                         <div class="bg-white rounded-[40px] shadow-2xl shadow-primary/10 border border-primary relative overflow-hidden group">
                             
-                            <div class="absolute top-0 left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] font-bold px-6 py-2 rounded-b-xl uppercase tracking-widest z-10 shadow-md">
-                                ★ Próximo Encontro
-                            </div>
-
-                            <div class="flex flex-col md:flex-row">
-                                
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] font-bold px-6 py-2 rounded-b-xl uppercase z-10 shadow-md flex items-center gap-2">
+                        <span>★</span>
+                        <span class="tracking-widest text-center">Próximo Encontro</span>
+                        <span>★</span>
+                    </div>
+                            <div class="flex flex-col md:flex-row"> 
                                 <div class="bg-[#FDFBF7] p-10 md:w-1/3 flex flex-col justify-center items-center border-b md:border-b-0 md:border-r border-primary/10 text-center relative overflow-hidden">
                                     <div class="absolute top-0 left-0 w-full h-2 bg-primary"></div>
 
@@ -258,7 +258,7 @@
                                         @if($destaque->link_sympla)
                                             <a href="{{ $destaque->link_sympla }}" target="_blank" 
                                             class="group bg-primary text-white px-10 py-4 rounded-full font-bold uppercase tracking-widest hover:bg-[#c29d4b] hover:-translate-y-1 transition-all duration-300 shadow-xl shadow-primary/20 flex items-center gap-3 text-xs">
-                                                Garantir Lugar
+                                                Garanta sua vaga
                                                 <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                                             </a>
                                         @endif
